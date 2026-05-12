@@ -90,16 +90,18 @@ func GetAllPhotos(db *sql.DB) ([]PhotoRecord, error) {
 }
 
 // InsertPhoto adds a new image record to the database
-func InsertPhoto(db *sql.DB, title, imageURL string) error {
+func InsertPhoto(db *sql.DB, title, imageURL string) (int, error) {
 	// Notice: Using $1 and $2 for Postgres parameterized queries to prevent SQL injection
-	query := `INSERT INTO gallery_items (title,image_url) VALUES ($1, $2)`
-	_, err := db.Exec(query, title, imageURL)
-	return err
+	var id int
+	query := `INSERT INTO gallery_items (title,image_url) VALUES ($1, $2) RETURNING id`
+	err := db.QueryRow(query, title, imageURL).Scan(&id)
+	return id, err
 }
 
 // DeletePhoto removes a record by its ID
-func DeletePhoto(db *sql.DB, id int) error {
-	query := `DELETE FROM gallery_items WHERE id = $1`
-	_, err := db.Exec(query, id)
-	return err
+func DeletePhoto(db *sql.DB, id int) (string, error) {
+	var imageURL string
+	query := `DELETE FROM gallery_items WHERE id = $1 RETURNING image_url`
+	err := db.QueryRow(query, id).Scan(&imageURL)
+	return imageURL, err
 }

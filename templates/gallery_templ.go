@@ -22,7 +22,7 @@ import (
 //}
 
 // GalleryCard generates a single image component
-func GalleryCard(item database.PhotoRecord) templ.Component {
+func GalleryCard(item database.PhotoRecord, isAdmin bool) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -95,20 +95,30 @@ func GalleryCard(item database.PhotoRecord) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</span> <button hx-delete=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</span> ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(string(templ.URL("/admin/photo/" + strconv.Itoa(item.ID))))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/gallery.templ`, Line: 25, Col: 75}
+		if isAdmin {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<button hx-delete=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var6 string
+			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(string(templ.URL("/admin/photo/" + strconv.Itoa(item.ID))))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/gallery.templ`, Line: 26, Col: 76}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" hx-confirm=\"Are you sure you want to delete this photo?\" hx-target=\"closest div.bg-gray-800\" hx-swap=\"outerHTML\" class=\"text-red-400 hover:text-red-500 text-sm font-semibold transition-colors\">Delete</button>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" hx-confirm=\"Are you sure you want to delete this photo?\" hx-target=\"closest div.bg-gray-800\" hx-swap=\"outerHTML\" class=\"text-red-400 hover:text-red-500 text-sm font-semibold transition-colors\">Delete</button></div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -117,7 +127,7 @@ func GalleryCard(item database.PhotoRecord) templ.Component {
 }
 
 // GalleryGrid is a container that loops through multiple items
-func GalleryGrid(items []database.PhotoRecord) templ.Component {
+func GalleryGrid(items []database.PhotoRecord, isAdmin bool) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -138,17 +148,77 @@ func GalleryGrid(items []database.PhotoRecord) templ.Component {
 			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div class=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div id=\"gallery-grid\" class=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		for _, item := range items {
-			templ_7745c5c3_Err = GalleryCard(item).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = GalleryCard(item, isAdmin).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+// UploadForm generates the UI for staff to upload new photos
+func UploadForm() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var8 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var8 == nil {
+			templ_7745c5c3_Var8 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<form hx-post=\"/admin/upload\" hx-encoding=\"multipart/form-data\" hx-target=\"#gallery-grid\" hx-swap=\"afterbegin\" class=\"bg-gray-800 p-6 rounded-lg border border-gray-700 mb-8 flex flex-col md:flex-row gap-4 items-end\"><div class=\"flex-1 w-full\"><label class=\"block text-sm text-gray-400 mb-1\">Event Title</label> <input type=\"text\" name=\"title\" required placeholder=\"e.g., Annual Sports Meet\" class=\"w-full bg-gray-900 border border-gray-700 text-[#ebdbb2] rounded p-2 focus:outline-none focus:border-green-500\"></div><div class=\"flex-1 w-full\"><label class=\"block text-sm text-gray-400 mb-1\">Photo</label> <input type=\"file\" name=\"photo\" accept=\"image/*\" required class=\"w-full text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-gray-700 file:text-[#ebdbb2] hover:file: bg-gray-600 transition-colors\"></div><button type=\"submit\" class=\"border-green-700 hover:bg-green-600 text-[#ebdbb2] font-bold py-2 px-6 rounded transition-colors w-full md:w-auto\">Upload Photo</button></form>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+// Login form is the gateway for school administrators
+func LoginForm() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var9 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var9 == nil {
+			templ_7745c5c3_Var9 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<div class=\"max-w-md mx-auto mt-16 bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700\"><h2 class=\"text-2xl text-[#ebdbb2] font-bold mb-6\">Admin Login</h2><form action=\"/login\" method=\"POST\" class=\"flex flex-col gap-4\"><div><label class=\"block text-sm text-gray-400 mb-1\">Username</label> <input type=\"text\" name=\"username\" required class=\"w-full bg-gray-900 border border-gray-700 text-[#ebdbb2] rounded p-2 focus: outline-none focus: border-green-500\"></div><div><label class=\"block text-sm text-gray-400 mb-1\">Password</label> <input type=\"password\" name=\"password\" required class=\"w-full bg-gray-900 border border-gray-700 text-[#ebdbb2] rounded p-2 focus: outline-none focus: border-green-500\"></div><button type=\"submit\" class=\"mt-4 bg-green-700 hover:bg-green-600 text-[#ebdbb2] font-bold py-2 px-4 rounded transition-colors\">Sign In</button></form></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

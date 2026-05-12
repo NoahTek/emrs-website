@@ -31,12 +31,16 @@ func main() {
 	// Serve static files (CSS, JS, Uploaded Photos)
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
-
-	// 2. The Main Dashboard Route
+	// The Main Dashboard Route (Public Route)
 	http.HandleFunc("/", app.Dashboard)
+	http.HandleFunc("/login", app.HandleLogin)
+	http.HandleFunc("/logout", app.HandleLogout)
 
-	// 3. The HTMX Delete Endpoint
-	http.HandleFunc("/admin/photo/", app.DeletePhoto)
+	// Protected routes wrapped in the RequireAuth Gatekeeper
+	// The Upload Route
+	http.HandleFunc("/admin/upload", app.RequireAuth(app.UploadPhoto))
+	// The HTMX Delete Endpoint
+	http.HandleFunc("/admin/photo/", app.RequireAuth(app.DeletePhoto))
 
 	log.Println("Server starting on http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
