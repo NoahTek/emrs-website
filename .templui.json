@@ -1,0 +1,7 @@
+{
+  "componentsDir": "templates/components",
+  "utilsDir": "templates/utils",
+  "moduleName": "github.com/NoahTek/emrs-website",
+  "jsDir": "static/js",
+  "jsPublicPath": "/static/js"
+}

@@ -2,7 +2,6 @@
 package handlers
 
 import (
-	"context"
 	"database/sql"
 	"io"
 	"log"
@@ -21,11 +20,14 @@ type Application struct {
 	DB *sql.DB
 }
 
-func (app *Application) Dashboard(w http.ResponseWriter, r *http.Request) {
+func (app *Application) HomePage(w http.ResponseWriter, r *http.Request) {
 	isAdmin := app.isAuthenticated(r)
-
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	_ = templates.Home(isAdmin).Render(r.Context(), w)
+}
 
+func (app *Application) Photoboard(w http.ResponseWriter, r *http.Request) {
+	isAdmin := app.isAuthenticated(r)
 	photos, err := database.GetAllPhotos(app.DB)
 	if err != nil {
 		log.Printf("Error fetching photos: %v", err)
@@ -33,53 +35,9 @@ func (app *Application) Dashboard(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Write a quick HTML shell.
-	// (In a full app, you'd make this a BaseLayout.templ component)
-	_, _ = w.Write([]byte(`
-		<!DOCTYPE html>
-		<html>
-		<head>
-			<title>EMRS Photo Dashboard</title>
-			<script src="https://unpkg.com/htmx.org@1.9.11"></script>
-			<script src="https://cdn.tailwindcss.com"></script>
-		</head>
-		<body class="bg-gray-900 text-[#ebdbb2] p-8 min-h-screen">
-			<div class="max-w-6xl mx-auto border-b border-gray-700 pb-4 mb-4">
-				<h1 class="text-3xl font-bold">EMRS Photo Dashboard</h1>
-				<p class="text-gray-400">Manage school gallery uploads.</p>
-			</div>
-	`))
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
-	// Add Logout button or Login link based on status
-	if isAdmin {
-		_, _ = w.Write([]byte(`<form action="/logout" method="POST"><button class="text-sm text-gray-400 hover:text-white">Logout</button></form>`))
-	} else {
-		_, _ = w.Write([]byte(`<a href="/login" class="text-gray-400 hover:text-white">Admin Login</a>`))
-	}
-	_, _ = w.Write([]byte(`</div>`))
-
-	// ONLY render the upload form if they are an admin
-	if isAdmin {
-		// Rendering the templ components using the REAL data
-		uploadForm := templates.UploadForm()
-		_ = uploadForm.Render(context.Background(), w)
-	}
-
-	// Initialize our templ component with data
-	gridComponent := templates.GalleryGrid(photos, isAdmin)
-
-	// Render the component directly to the HTTP ResponseWriter
-	err = gridComponent.Render(context.Background(), w)
-	if err != nil {
-		log.Printf("Error rendering template: %v", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-	}
-
-	// Close the HTML shell
-	_, err = w.Write([]byte(`</body></html>`))
-	if err != nil {
-		log.Printf("failed to clolse HTML shell: %v", err)
-	}
+	_ = templates.Gallery(photos, isAdmin).Render(r.Context(), w)
 }
 
 func (app *Application) DeletePhoto(w http.ResponseWriter, r *http.Request) {
@@ -203,11 +161,8 @@ func (app *Application) RequireAuth(next http.HandlerFunc) http.HandlerFunc {
 // HandleLogin processes the login form
 func (app *Application) HandleLogin(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		// Render the login HTML page
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		_, _ = w.Write([]byte(`<!DOCTYPE html><html><head><title>login</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-gray-900">`))
-		_ = templates.LoginForm().Render(r.Context(), w)
-		_, _ = w.Write([]byte(`</body></html>`))
+		_ = templates.LoginPage().Render(r.Context(), w)
 		return
 	}
 

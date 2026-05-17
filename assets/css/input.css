@@ -1,0 +1,131 @@
+@import "tailwindcss";
+@source "../../templates";
+
+/* 1. Define the static raw scales in @theme (The Dictionary) */
+@theme {
+  --color-text-50: oklch(94.04% 0.026 288.32);
+  --color-text-100: oklch(87.78% 0.054 287.59);
+  --color-text-200: oklch(75.49% 0.111 285.75);
+  --color-text-300: oklch(63.40% 0.171 282.69);
+  --color-text-400: oklch(52.25% 0.226 277.40);
+  --color-text-500: oklch(43.73% 0.266 269.48);
+  --color-text-600: oklch(37.34% 0.224 269.98);
+  --color-text-700: oklch(30.66% 0.179 270.85);
+  --color-text-800: oklch(23.66% 0.130 272.49);
+  --color-text-900: oklch(16.21% 0.076 276.57);
+  --color-text-950: oklch(11.83% 0.046 280.65);
+
+  --color-background-50: oklch(96.12% 0.000 89.88);
+  --color-background-100: oklch(92.49% 0.000 89.88);
+  --color-background-200: oklch(84.52% 0.000 89.88);
+  --color-background-300: oklch(76.68% 0.000 89.88);
+  --color-background-400: oklch(68.30% 0.000 89.88);
+  --color-background-500: oklch(59.99% 0.000 89.88);
+  --color-background-600: oklch(51.03% 0.000 89.88);
+  --color-background-700: oklch(42.02% 0.000 89.88);
+  --color-background-800: oklch(32.11% 0.000 89.88);
+  --color-background-900: oklch(21.78% 0.000 89.88);
+  --color-background-950: oklch(15.91% 0.000 89.88);
+
+  --color-primary-50: oklch(94.47% 0.032 311.75);
+  --color-primary-100: oklch(89.25% 0.064 312.01);
+  --color-primary-200: oklch(78.64% 0.133 311.16);
+  --color-primary-300: oklch(68.86% 0.197 310.05);
+  --color-primary-400: oklch(60.43% 0.251 307.93);
+  --color-primary-500: oklch(54.31% 0.276 303.92);
+  --color-primary-600: oklch(46.28% 0.233 304.47);
+  --color-primary-700: oklch(37.72% 0.187 305.09);
+  --color-primary-800: oklch(28.70% 0.138 305.81);
+  --color-primary-900: oklch(18.91% 0.083 308.27);
+  --color-primary-950: oklch(13.51% 0.054 310.83);
+
+  --color-secondary-50: oklch(96.40% 0.022 58.79);
+  --color-secondary-100: oklch(92.71% 0.044 54.89);
+  --color-secondary-200: oklch(85.96% 0.089 55.12);
+  --color-secondary-300: oklch(79.58% 0.134 53.18);
+  --color-secondary-400: oklch(74.14% 0.173 50.15);
+  --color-secondary-500: oklch(69.58% 0.204 43.49);
+  --color-secondary-600: oklch(59.08% 0.171 44.27);
+  --color-secondary-700: oklch(47.94% 0.137 45.04);
+  --color-secondary-800: oklch(36.28% 0.100 47.36);
+  --color-secondary-900: oklch(23.44% 0.060 52.46);
+  --color-secondary-950: oklch(16.61% 0.038 61.83);
+
+  --color-accent-50: oklch(97.38% 0.017 88.00);
+  --color-accent-100: oklch(94.69% 0.033 89.85);
+  --color-accent-200: oklch(89.70% 0.068 90.59);
+  --color-accent-300: oklch(84.56% 0.098 90.14);
+  --color-accent-400: oklch(79.53% 0.124 89.14);
+  --color-accent-500: oklch(74.97% 0.141 87.15);
+  --color-accent-600: oklch(63.43% 0.118 87.17);
+  --color-accent-700: oklch(51.67% 0.095 87.57);
+  --color-accent-800: oklch(39.19% 0.070 88.28);
+  --color-accent-900: oklch(25.23% 0.040 88.63);
+  --color-accent-950: oklch(17.84% 0.027 94.25);
+
+  /* 2. Register Semantic Classes into Tailwind */
+  --color-background: var(--bg-color);
+  --color-foreground: var(--fg-color);
+  --color-primary: var(--primary-color);
+  --color-primary-foreground: var(--primary-fg-color);
+  --color-secondary: var(--secondary-color);
+  --color-secondary-foreground: var(--secondary-fg-color);
+  --color-accent: var(--accent-color);
+  --color-accent-foreground: var(--accent-fg-color);
+  --color-card: var(--card-color);
+  --color-card-foreground: var(--card-fg-color);
+  --color-popover: var(--popover-color);
+  --color-popover-foreground: var(--popover-fg-color);
+  --color-destructive: oklch(0.577 0.245 27.325); /* Solid warning red */
+  --color-destructive-foreground: var(--color-text-50);
+  --color-border: var(--border-color);
+  --color-input: var(--input-color);
+  --color-ring: var(--ring-color);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  /* 3. The Switch: Light Mode */
+  :root {
+    --bg-color: var(--color-background-50);
+    --fg-color: var(--color-background-900);
+    --primary-color: var(--color-primary-800);
+    --primary-fg-color: var(--color-primary-200);
+    --secondary-color: var(--color-secondary-700);
+    --secondary-fg-color: var(--color-secondary-200);
+    --accent-color: var(--color-accent-300);
+    --accent-fg-color: var(--color-accent-900);
+    --card-color: var(--color-background-50);
+    --card-fg-color: var(--color-background-900);
+    --popover-color: var(--color-background-50);
+    --popover-fg-color: var(--color-background-900);
+    --border-color: var(--color-background-300);
+    --input-color: var(--color-background-200);
+    --ring-color: var(--color-primary-400);
+  }
+
+  /* 4. The Switch: Dark Mode */
+  .dark {
+    --bg-color: var(--color-background-950);
+    --fg-color: var(--color-background-50);
+    --primary-color: var(--color-primary-200); /* Lighter purple for dark mode contrast */
+    --primary-fg-color: var(--color-primary-800);
+    --secondary-color: var(--color-secondary-200);
+    --secondary-fg-color: var(--color-secondary-700);
+    --accent-color: var(--color-accent-900);
+    --accent-fg-color: var(--color-accent-300);
+    --card-color: var(--color-background-950);
+    --card-fg-color: var(--color-background-50);
+    --popover-color: var(--color-background-950);
+    --popover-fg-color: var(--color-background-50);
+    --border-color: var(--color-background-800);
+    --input-color: var(--color-background-700);
+    --ring-color: var(--color-primary-500);
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply text-primary-foreground hover:text-secondary-foreground font-medium transition-colors flex items-center;
+  }
+}

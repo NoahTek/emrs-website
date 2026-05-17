@@ -32,7 +32,8 @@ func main() {
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	// The Main Dashboard Route (Public Route)
-	http.HandleFunc("/", app.Dashboard)
+	http.HandleFunc("/", app.HomePage)
+	http.HandleFunc("/gallery", app.Photoboard)
 	http.HandleFunc("/login", app.HandleLogin)
 	http.HandleFunc("/logout", app.HandleLogout)
 
