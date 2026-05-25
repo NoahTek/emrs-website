@@ -1,0 +1,30 @@
+package templates
+
+import "github.com/templui/templui/components/carousel"
+import "github.com/NoahTek/emrs-website/templates/components/card"
+
+templ HeroCarouselSlide(imageURL, altText string) {
+	@card.Card() {
+		@card.Content(card.ContentProps{Class: "relative overflow-hidden p-0"}) {
+			<div class="w-full relative">
+				<img src={ imageURL } alt={ altText } class="w-full h-auto block" draggable="false"/>
+			</div>
+		}
+	}
+}
+
+templ HeroCarousel() {
+	@carousel.Carousel(carousel.Props{Class: "rounded-lg shadow-xl overflow-hidden"}) {
+		@carousel.Content() {
+			@carousel.Item() {
+				@HeroCarouselSlide("/static/uploads/banner.jpeg", "banner-1")
+			}
+			@carousel.Item() {
+				@HeroCarouselSlide("/static/uploads/banner2-6.jpg", "banner-2")
+			}
+		}
+		@carousel.Previous()
+		@carousel.Next()
+		@carousel.Indicators(carousel.IndicatorsProps{Count: 2})
+	}
+}

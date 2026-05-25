@@ -1,0 +1,49 @@
+package templates
+
+templ AboutUs() {
+	<section id="about" class="max-w-7xl mx-auto py-16 px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+		<img src="/static/uploads/home-abt-pic1-copy.png"/>
+		<div>
+			<h3 class="text-3xl font-bold mb-4">About Us</h3>
+			<p class="text-foreground leading-relaxed">
+				Eklavya Model Residential School (EMRS) are Set up in the states with grants under Article 275(1) of the constitution of India. The objective of EMRS is to provide quality education to all Scheduled Tribes Students irrespective of their learning competencies in a inclusive manner.
+			</p>
+			<p class="text-foreground leading-relaxed">
+				Especially for the students who are from remotes areas of the country. Not only to enable them to get reservation but also to make them able to obtain general, technical and professional courses in order to Secure a position or a job in government, public and private sector. This is to ensure them with ample opportunities which will help them to par with the non ST population of the country . 
+			</p>
+		</div>
+	</section>
+	<section class="py-16 mt-32 flex flex-col md:flex-row justify-center items-center gap-16 md:gap-32 text-center grid grid-cols-1 md:grid-cols-2 gap-2">
+		// Bottom Half: Leadership Profiles
+		// Principal
+		<div class="group">
+			<div class="w-48 h-48 mx-auto mb-6 rounded-full p-2 bg-gradient-to-tr from-orange-400 to-purple-600 shadow-xl transition-transform duration-300 group-hover:scale-105">
+				<img src="/static/uploads/principal.jpg" alt="Principal" class="w-full h-full rounded-full object-cover border-4 border-white bg-gray-100" onerror="this.src='https://ui-avatars.com/api/?name=Principal&background=f3f4f6'"/>
+			</div>
+			<h3 class="text-xl font-bold text-orange-600">DR. PRINCIPAL NAME</h3>
+			<p class="text-sm text-gray-500 font-bold uppercase tracking-wider mt-1">Principal</p>
+			<p class="text-xs text-gray-400 mt-1">EMRS, Kadakkal</p>
+		</div>
+		// Chairman
+		<div class="group">
+			<div class="w-48 h-48 mx-auto mb-6 rounded-full p-2 bg-gradient-to-tr from-orange-400 to-purple-600 shadow-xl transition-transform duration-300 group-hover:scale-105">
+				<img src="/static/uploads/vice-principal.jpg" alt="Vice Principal" class="w-full h-full rounded-full object-cover border-4 border-white bg-gray-100" onerror="this.src='https://ui-avatars.com/api/?name=Vice+Principal&background=f3f4f6'"/>
+			</div>
+			<h3 class="text-xl font-bold text-orange-600">MR. VICE PRINCIPAL</h3>
+			<p class="text-sm text-gray-500 font-bold uppercase tracking-wider mt-1">Vice Principal</p>
+			<p class="text-xs text-gray-400 mt-1">EMRS, Kadakkal</p>
+		</div>
+	</section>
+	<section class="bg-accent py-16">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-12">
+			<div>
+				<h3 class="text-2xl font-bold mb-4 text-primary">VISION</h3>
+				<p class="text-accent-foreground">To nurture individuals with academic excellence and core values...</p>
+			</div>
+			<div>
+				<h3 class="text-2xl font-bold mb-4 text-primary">MISSION</h3>
+				<p class="text-accent-foreground">To create a conducive learning environment that empowers students...</p>
+			</div>
+		</div>
+	</section>
+}

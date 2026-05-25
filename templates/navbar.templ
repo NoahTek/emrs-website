@@ -1,0 +1,112 @@
+package templates
+
+import (
+	"github.com/NoahTek/emrs-website/templates/components/button"
+	"github.com/NoahTek/emrs-website/templates/components/icon"
+	"github.com/NoahTek/emrs-website/templates/components/separator"
+)
+
+templ DarkModeScript() {
+	<script>
+		if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+			document.documentElement.classList.add('dark');
+			} else {
+			document.documentElement.classList.remove('dark');
+			}
+	</script>
+}
+
+templ NavBar(isAdmin bool) {
+	<nav class="bg-primary border-b border-border sticky top-0 z-50 shadow-md">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="flex justify-between items-center py-2">
+				<a class="flex-shrink-0 flex items-center gap-3" href="/">
+					<img src="/static/uploads/lOGO-emrs.png" class="h-20 w-auto justify-center"/>
+					<div class="flex flex-col">
+						<span class="text-xs font-bold text-primary-foreground uppercase leading-tight tracking-tight">Kerala State Eklavya Model Residential School Society</span>
+						<span class="text-[9px] font-medium text-background-500 uppercase leading-tight">Fourth Floor, Vikas Bhavan, Thiruvananthapuram-695033 (Reg. No. TVM/TC/23/2021,01.08.2021)</span>
+						<span class="text-xl font-bold text-secondary-foreground uppercase leading-tight tracking-tight">Eklavya Model Residential School</span>
+						<span class="text-[9px] font-medium text-background-500 uppercase leading-tight">Idukki, Painavu, School Code: 29064, Higher Secondary: 6083, UDISE- 32090200308</span>
+					</div>
+				</a>
+				<div class="hidden md:flex space-x-8">
+					@button.Button(button.Props{
+						Variant: button.VariantGhost,
+						Href:    "#about",
+						Class:   "nav-link",
+					}) {
+						About Us
+					}
+					@button.Button(button.Props{
+						Variant: button.VariantGhost,
+						Href:    "#academics",
+						Class:   "nav-link",
+					}) {
+						Academics
+					}
+					@button.Button(button.Props{
+						Variant: button.VariantGhost,
+						Href:    "/gallery",
+						Class:   "nav-link",
+					}) {
+						Gallery
+					}
+					@button.Button(button.Props{
+						Variant: button.VariantGhost,
+						Href:    "#contact",
+						Class:   "nav-link",
+					}) {
+						Contact
+					}
+					@separator.Separator(separator.Props{
+						Orientation: separator.OrientationVertical,
+						Class:       "h-8 mx-2 text-primary-foreground",
+					})
+					@button.Button(button.Props{
+						Size:    button.SizeIcon,
+						Variant: button.VariantGhost,
+						Class:   "nav-link",
+						Attributes: templ.Attributes{
+							"onclick":    "toggleTheme()",
+							"aria-label": "Toggle Dark Mode",
+						},
+					}) {
+						@icon.SunMoon(icon.Props{Class: "size-4"})
+					}
+					<script>
+		          	function toggleTheme() {
+		          		if (document.documentElement.classList.contains('dark')) {
+		          			document.documentElement.classList.remove('dark');
+		          			localStorage.setItem('theme', 'light');
+		          		} else {
+		          			document.documentElement.classList.add('dark');
+		          			localStorage.setItem('theme', 'dark');
+		          		}
+		          	}
+		          </script>
+					if isAdmin {
+						<form action="/logout" method="POST">
+							@button.Button(button.Props{
+								Type:    "submit",
+								Variant: "ghost",
+								Class:   "nav-link",
+							}) {
+								Logout
+							}
+						</form>
+					} else {
+						<a href="/login">
+							@button.Button(button.Props{
+								Type:    "button",
+								Variant: "ghost",
+								Class:   "nav-link",
+							}) {
+								Admin Login
+							}
+						</a>
+					}
+				</div>
+			</div>
+		</div>
+	</nav>
+}

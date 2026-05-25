@@ -41,7 +41,23 @@ func Home(isAdmin bool) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"relative w-full h-[60vh] bg-background overflow-hidden flex items-center justify-center\"><div class=\"absolute inset-0 bg-accent z-10\"></div><div class=\"z-20 text-center px-4\"><h1 class=\"text-4xl md:text-6xl font-bold text-primary mb-4 shadow-lg\">TO PROVIDE QUALITY EDUCATION</h1><h2 class=\"text-2xl md:text-3xl text-secondary\">TO ALL SCHEDULED TRIBES STUDENTS</h2></div></section><div class=\"bg-primary text-sm py-2 border-y border-border px-4 overflow-hidden\"><p class=\"text-primary-foreground whitespace-nowrap animate-marquee\">New Admissions Open for 2026-2027 Academic Year • Latest Notification Regarding Exams...</p></div><section class=\"max-w-7xl mx-auto py-16 px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center\"><div class=\"grid grid-cols-2 gap-2\"><div class=\"bg-background-700 h-40 rounded-tl-3xl\"></div><div class=\"bg-background-600 h-40 rounded-tr-3xl\"></div><div class=\"bg-background-600 h-40 rounded-bl-3xl\"></div><div class=\"bg-background-700 h-40 rounded-br-3xl\"></div></div><div><h3 class=\"text-3xl font-bold mb-4\">About us</h3><p class=\"text-foreground leading-relaxed\">Ekalavya Model Residential School (EMRS) is established to provide quality education...</p></div></section><section class=\"bg-accent py-16\"><div class=\"max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-12\"><div><h3 class=\"text-2xl font-bold mb-4 text-primary\">VISION</h3><p class=\"text-accent-foreground\">To nurture individuals with academic excellence and core values...</p></div><div><h3 class=\"text-2xl font-bold mb-4 text-primary\">MISSION</h3><p class=\"text-accent-foreground\">To create a conducive learning environment that empowers students...</p></div></div></section>")
+			templ_7745c5c3_Err = HeroCarousel().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = NoticeBoard().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = AboutUs().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

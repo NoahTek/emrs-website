@@ -1,0 +1,52 @@
+package templates
+
+import (
+	"github.com/NoahTek/emrs-website/templates/components/button"
+	"github.com/NoahTek/emrs-website/templates/components/form"
+	"github.com/NoahTek/emrs-website/templates/components/input"
+)
+
+// LoginPage wraps LoginForm with the full BaseLayout
+templ LoginPage() {
+	@BaseLayout("EMRS - Login", false) {
+		<div class="max-w-md mx-auto mt-16">
+			@LoginForm()
+		</div>
+	}
+}
+
+// LoginForm is the gateway for school administrators
+templ LoginForm() {
+	<div class="max-w-md mx-auto mt-16 bg-background p-8 rounded-lg shadow-lg border border-border">
+		<h2 class="text-2xl text-primary font-bold mb-6">Admin Login</h2>
+		<form action="/login" method="POST" class="flex flex-col gap-4">
+			@form.Item() {
+				@form.Label(form.LabelProps{For: "username"}) {
+					Username
+				}
+				@input.Input(input.Props{
+					ID:          "username",
+					Name:        "username",
+					Placeholder: "username",
+					Required:    true,
+					Type:        input.TypeText,
+				})
+				@form.Label(form.LabelProps{For: "password"}) {
+					Password
+				}
+				@input.Input(input.Props{
+					ID:       "password",
+					Name:     "password",
+					Required: true,
+					Type:     input.TypePassword,
+				})
+				@button.Button(button.Props{
+					Type:  button.TypeSubmit,
+					Class: "w-full",
+				}) {
+					Sign In
+				}
+			}
+		</form>
+	</div>
+}

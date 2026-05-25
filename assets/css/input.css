@@ -3,18 +3,6 @@
 
 /* 1. Define the static raw scales in @theme (The Dictionary) */
 @theme {
-  --color-text-50: oklch(94.04% 0.026 288.32);
-  --color-text-100: oklch(87.78% 0.054 287.59);
-  --color-text-200: oklch(75.49% 0.111 285.75);
-  --color-text-300: oklch(63.40% 0.171 282.69);
-  --color-text-400: oklch(52.25% 0.226 277.40);
-  --color-text-500: oklch(43.73% 0.266 269.48);
-  --color-text-600: oklch(37.34% 0.224 269.98);
-  --color-text-700: oklch(30.66% 0.179 270.85);
-  --color-text-800: oklch(23.66% 0.130 272.49);
-  --color-text-900: oklch(16.21% 0.076 276.57);
-  --color-text-950: oklch(11.83% 0.046 280.65);
-
   --color-background-50: oklch(96.12% 0.000 89.88);
   --color-background-100: oklch(92.49% 0.000 89.88);
   --color-background-200: oklch(84.52% 0.000 89.88);

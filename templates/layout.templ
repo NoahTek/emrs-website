@@ -1,9 +1,8 @@
 package templates
 
 import (
-	"github.com/NoahTek/emrs-website/templates/components/button"
-	"github.com/NoahTek/emrs-website/templates/components/icon"
-	"github.com/NoahTek/emrs-website/templates/components/separator"
+	"github.com/NoahTek/emrs-website/templates/components/carousel"
+	"github.com/NoahTek/emrs-website/templates/components/input"
 )
 
 // BaseLayout is the master wrapper for all pages
@@ -18,117 +17,16 @@ templ BaseLayout(title string, isAdmin bool) {
 			<script src="https://unpkg.com/htmx.org@1.9.11"></script>
 			<script src="/static/js/dialog.js" defer></script>
 			<script src="/static/js/label.js" defer></script>
-			<script>
-			  if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-			  	document.documentElement.classList.add('dark');
-			  } else {
-			  	document.documentElement.classList.remove('dark');
-			  }
-		  </script>
+			@carousel.Script()
+			@input.Script()
+			@DarkModeScript()
 		</head>
-		<body class="bg-background text-foreground min-h-screen flex flex-col font-sans">
-			<nav class="bg-primary border-b border-border sticky top-0 z-50 shadow-md">
-				<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div class="flex justify-between items-center h-16">
-						<div class="flex-shrink-0 flex items-center gap-3">
-							<div class="w-10 h-10 bg-background rounded-full flex items-center justify-center text-primary font-bold">
-								E
-							</div>
-							<span class="font-bold text-xl tracking-tight">EMRS</span>
-						</div>
-						<div class="hidden md:flex space-x-8">
-							@button.Button(button.Props{
-								Variant: button.VariantGhost,
-								Href:    "/",
-								Class:   "nav-link",
-							}) {
-								Home
-							}
-							@button.Button(button.Props{
-								Variant: button.VariantGhost,
-								Href:    "#about",
-								Class:   "nav-link",
-							}) {
-								About Us
-							}
-							@button.Button(button.Props{
-								Variant: button.VariantGhost,
-								Href:    "#academics",
-								Class:   "nav-link",
-							}) {
-								Academics
-							}
-							@button.Button(button.Props{
-								Variant: button.VariantGhost,
-								Href:    "/gallery",
-								Class:   "nav-link",
-							}) {
-								Gallery
-							}
-							@button.Button(button.Props{
-								Variant: button.VariantGhost,
-								Href:    "#contact",
-								Class:   "nav-link",
-							}) {
-								Contact
-							}
-							@separator.Separator(separator.Props{
-								Orientation: separator.OrientationVertical,
-								Class:       "nav-link",
-							})
-							@button.Button(button.Props{
-								Size:    button.SizeIcon,
-								Variant: button.VariantGhost,
-								Class:   "nav-link",
-								Attributes: templ.Attributes{
-									"onclick":    "toggleTheme()",
-									"aria-label": "Toggle Dark Mode",
-								},
-							}) {
-								@icon.SunMoon(icon.Props{Class: "size-4"})
-							}
-							<script>
-		          	function toggleTheme() {
-		          		if (document.documentElement.classList.contains('dark')) {
-		          			document.documentElement.classList.remove('dark');
-		          			localStorage.setItem('theme', 'light');
-		          		} else {
-		          			document.documentElement.classList.add('dark');
-		          			localStorage.setItem('theme', 'dark');
-		          		}
-		          	}
-		          </script>
-							if isAdmin {
-								<form action="/logout" method="POST">
-									@button.Button(button.Props{
-										Type:    "submit",
-										Variant: "ghost",
-										Class:   "nav-link",
-									}) {
-										Logout
-									}
-								</form>
-							} else {
-								<a href="/login">
-									@button.Button(button.Props{
-										Type:    "button",
-										Variant: "ghost",
-										Class:   "nav-link",
-									}) {
-										Admin Login
-									}
-								</a>
-							}
-						</div>
-					</div>
-				</div>
-			</nav>
+		@NavBar(isAdmin)
+		<body class="text-foreground min-h-screen flex flex-col font-sans bg-cover bg-fixed bg-center bg-no-repeat" style="background-image: url('/static/uploads/sectionbg2.png');">
 			<main class="flex-grow">
 				{ children... }
 			</main>
-			<footer class="bg-background border-t border-border text-center py-8 mt-12">
-				<p class="text-secondary text-sm">© 2026 Ekalavya Model Residential School. All rights reserved.</p>
-			</footer>
 		</body>
+		@Footer()
 	</html>
 }

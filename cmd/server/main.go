@@ -6,6 +6,7 @@ import (
 
 	"github.com/NoahTek/emrs-website/internal/database"
 	"github.com/NoahTek/emrs-website/internal/handlers"
+	"github.com/templui/templui/utils"
 )
 
 func main() {
@@ -31,6 +32,10 @@ func main() {
 	// Serve static files (CSS, JS, Uploaded Photos)
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
+	// This exposes the /templui/js/... routes so the browser can download the component logic
+	utils.SetupScriptRoutes(http.DefaultServeMux, false)
+
 	// The Main Dashboard Route (Public Route)
 	http.HandleFunc("/", app.HomePage)
 	http.HandleFunc("/gallery", app.Photoboard)
